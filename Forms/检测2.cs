@@ -406,7 +406,7 @@ namespace WY_App
                 HOperatorSet.IntersectionLines(pointReault[3].Row1, pointReault[3].Colum1, pointReault[3].Row2, pointReault[3].Colum2,
                     pointReault[5].Row1, pointReault[5].Colum1, pointReault[5].Row2, pointReault[5].Colum2, out Row, out Column, out IsOverlapping);
                 HOperatorSet.DispCross(hWindow, Row, Column, 60, 0);
-                bool dplResult = false;
+                bool dplResult = true;
 
                 rect1.Row2 = Row - 30;
                 rect1.Colum2 = Column - 30;
