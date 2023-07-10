@@ -10,7 +10,7 @@ using Utilities.BunifuToolTip.Transitions;
 
 namespace WY_App.Utility
 {
-    public class Parameter
+    public class Parameters
     {
         /// <summary>
         /// 日志等级
@@ -340,6 +340,11 @@ namespace WY_App.Utility
             /// path
             /// </summary>
             public string ImageSavePath;
+            /// <summary>
+            /// path
+            /// </summary>
+            public string productName;
+
             public string DeviceID;
             /// <summary>
             /// 联机参数设置
@@ -383,11 +388,20 @@ namespace WY_App.Utility
                 ImagePath = @"D:\VisionDetect\InspectImage\";
                 ImageSavePath = @"D:\Image";
                 DeviceID = "";
+                productName = "初始化";
             }
         }
 
         public static Commministion commministion = new Commministion();
-
+        public class DeviceName
+        {
+            public string DeviceID;
+            public DeviceName()
+            {
+                DeviceID = "";
+            }
+        }
+        public static DeviceName deviceName = new DeviceName();
         public class PLCParams
         {
             public string Trigger_Detection1;

@@ -25,16 +25,16 @@ namespace WY_App.Utility
             while(!TcpClientConnectResult)
             {
                 socketSend = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                IPAddress ip = IPAddress.Parse(Parameter.commministion.TcpClientIpAddress);
-                IPEndPoint point = new IPEndPoint(ip, Convert.ToInt32(Parameter.commministion.TcpClientIpPort));
+                IPAddress ip = IPAddress.Parse(Parameters.commministion.TcpClientIpAddress);
+                IPEndPoint point = new IPEndPoint(ip, Convert.ToInt32(Parameters.commministion.TcpClientIpPort));
                 socketSend.SendTimeout = 1000;
                 socketSend.ReceiveTimeout = 3000;
                 try
                 {
                     socketSend.Connect(point);
-                    LogHelper.Log.WriteInfo("TcpClientIP:" + Parameter.commministion.TcpClientIpAddress +"Port:"+ Parameter.commministion.TcpClientIpPort+ "链接成功");
+                    LogHelper.Log.WriteInfo("TcpClientIP:" + Parameters.commministion.TcpClientIpAddress +"Port:"+ Parameters.commministion.TcpClientIpPort+ "链接成功");
                     string str = TcpClient.tcpClientSend("Tcp客户端接入");
-                    MainForm.AlarmList.Add("TcpClientIP:" + Parameter.commministion.TcpClientIpAddress + "Port:" + Parameter.commministion.TcpClientIpPort + "链接成功");
+                    MainForm.AlarmList.Add("TcpClientIP:" + Parameters.commministion.TcpClientIpAddress + "Port:" + Parameters.commministion.TcpClientIpPort + "链接成功");
                     TcpClientConnectResult = true;
                     Thread th = new Thread(ReciveMessagr);
                     th.IsBackground = true;
@@ -43,8 +43,8 @@ namespace WY_App.Utility
                 }
                 catch (Exception ex)
                 {
-                    LogHelper.Log.WriteError("TcpClientIP:" + Parameter.commministion.TcpClientIpAddress + "Port:" + Parameter.commministion.TcpClientIpPort +"链接失败:", ex.Message);
-                    MainForm.AlarmList.Add("TcpClientIP:" + Parameter.commministion.TcpClientIpAddress + "Port:" + Parameter.commministion.TcpClientIpPort + "链接失败:" + ex.Message);
+                    LogHelper.Log.WriteError("TcpClientIP:" + Parameters.commministion.TcpClientIpAddress + "Port:" + Parameters.commministion.TcpClientIpPort +"链接失败:", ex.Message);
+                    MainForm.AlarmList.Add("TcpClientIP:" + Parameters.commministion.TcpClientIpAddress + "Port:" + Parameters.commministion.TcpClientIpPort + "链接失败:" + ex.Message);
                     TcpClientConnectResult = false;
                 }
             }          

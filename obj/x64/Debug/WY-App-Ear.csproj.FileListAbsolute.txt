@@ -1322,3 +1322,4 @@ D:\Toptics\WyApp_EarDetection\bin\x64\Debug\System.Memory.xml
 D:\Toptics\WyApp_EarDetection\bin\x64\Debug\System.Numerics.Vectors.xml
 D:\Toptics\WyApp_EarDetection\bin\x64\Debug\System.Runtime.CompilerServices.Unsafe.xml
 D:\Toptics\WyApp_EarDetection\obj\x64\Debug\WY-App-Ear.csproj.CopyComplete
+D:\Toptics\WyApp_EarDetection\obj\x64\Debug\WY_App.切换产品.resources

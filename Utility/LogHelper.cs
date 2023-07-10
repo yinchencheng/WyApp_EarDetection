@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 using HslCommunication.LogNet;
-using static WY_App.Utility.Parameter;
+using static WY_App.Utility.Parameters;
 
 namespace WY_App.Utility
 {

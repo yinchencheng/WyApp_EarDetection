@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <SpecificationsCam1 xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <矩形检测区域>
-    <Row1>953.89851024208565</Row1>
-    <Colum1>840.42191435768257</Colum1>
-    <Row2>1234.2113594040968</Row2>
-    <Colum2>1415.4244332493702</Colum2>
+    <Row1>1070.6691792294807</Row1>
+    <Colum1>971.45465994962217</Colum1>
+    <Row2>1346.8232830820771</Row2>
+    <Colum2>1560.331234256927</Colum2>
     <Length1>0</Length1>
     <Length2>0</Length2>
     <阈值>8</阈值>
@@ -14,10 +14,10 @@
   </矩形检测区域>
   <模板区域>
     <Rect1>
-      <Row1>982.50186219739294</Row1>
-      <Colum1>835.79722921914356</Colum1>
-      <Row2>1257.0940409683426</Row2>
-      <Colum2>851.21284634760707</Colum2>
+      <Row1>1094.6825795644891</Row1>
+      <Colum1>954.49748110831229</Colum1>
+      <Row2>1312.5184254606365</Row2>
+      <Colum2>956.03904282115866</Colum2>
       <Length1>100</Length1>
       <Length2>3</Length2>
       <阈值>10</阈值>
@@ -27,10 +27,10 @@
       <LineLength>50</LineLength>
     </Rect1>
     <Rect1>
-      <Row1>955.80540037243952</Row1>
-      <Colum1>1463.212846347607</Colum1>
-      <Row2>1268.5353817504656</Row2>
-      <Colum2>1472.4622166246852</Colum2>
+      <Row1>1099.8283082077053</Row1>
+      <Colum1>1588.0793450881613</Colum1>
+      <Row2>1331.3860971524289</Row2>
+      <Colum2>1581.9130982367758</Colum2>
       <Length1>100</Length1>
       <Length2>3</Length2>
       <阈值>8</阈值>
@@ -40,10 +40,10 @@
       <LineLength>50</LineLength>
     </Rect1>
     <Rect1>
-      <Row1>902.41247672253257</Row1>
-      <Colum1>928.29093198992439</Colum1>
-      <Row2>908.13314711359408</Row2>
-      <Colum2>1302.8904282115868</Colum2>
+      <Row1>1032.9338358458961</Row1>
+      <Colum1>1071.6561712846349</Colum1>
+      <Row2>1027.78810720268</Row2>
+      <Colum2>1370.7191435768261</Colum2>
       <Length1>100</Length1>
       <Length2>3</Length2>
       <阈值>8</阈值>
@@ -53,10 +53,10 @@
       <LineLength>100</LineLength>
     </Rect1>
     <Rect1>
-      <Row1>1295.2318435754189</Row1>
-      <Colum1>1603.4949622166246</Colum1>
-      <Row2>1293.3249534450651</Row2>
-      <Colum2>1933.3891687657431</Colum2>
+      <Row1>1391.4195979899498</Row1>
+      <Colum1>1671.3236775818639</Colum1>
+      <Row2>1389.7043551088777</Row2>
+      <Colum2>1951.8879093198993</Colum2>
       <Length1>100</Length1>
       <Length2>3</Length2>
       <阈值>8</阈值>
@@ -66,10 +66,10 @@
       <LineLength>20</LineLength>
     </Rect1>
     <Rect1>
-      <Row1>1255.1032500521626</Row1>
-      <Colum1>934.06579598555993</Colum1>
-      <Row2>1253.2937554618923</Row2>
-      <Colum2>1297.062485251945</Colum2>
+      <Row1>1355.7024739583333</Row1>
+      <Colum1>1077.9996337890625</Colum1>
+      <Row2>1353.991497179315</Row2>
+      <Colum2>1364.9984099408252</Colum2>
       <Length1>100</Length1>
       <Length2>3</Length2>
       <阈值>8</阈值>
@@ -149,8 +149,8 @@
     <max>1</max>
     <adjust>0</adjust>
   </胶线>
-  <BaseRow>1298.9051513671875</BaseRow>
-  <BaseColumn>832.84307201728836</BaseColumn>
+  <BaseRow>1399.7339820795853</BaseRow>
+  <BaseColumn>953.04323105651793</BaseColumn>
   <TrianEnabled>false</TrianEnabled>
   <PixelResolution>0.01247</PixelResolution>
   <SaveOrigalImage>true</SaveOrigalImage>

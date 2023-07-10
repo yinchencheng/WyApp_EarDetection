@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WY_App;
-using static WY_App.Utility.Parameter;
+using static WY_App.Utility.Parameters;
 
 namespace WY_App.Utility
 {
@@ -150,8 +150,8 @@ namespace WY_App.Utility
         }
         public static void SetFramegrabberParam(HTuple hv_AcqHandle)
         {
-            HOperatorSet.SetFramegrabberParam(hv_AcqHandle, "gain", Parameter.cameraParam.Gain[0]);
-            HOperatorSet.SetFramegrabberParam(hv_AcqHandle, "ExposureTime", Parameter.cameraParam.Shutter[0]);
+            HOperatorSet.SetFramegrabberParam(hv_AcqHandle, "gain", Parameters.cameraParam.Gain[0]);
+            HOperatorSet.SetFramegrabberParam(hv_AcqHandle, "ExposureTime", Parameters.cameraParam.Shutter[0]);
 
         }
         public static void GrabImageAsync(HTuple hv_AcqHandle, out HObject himage)
@@ -163,7 +163,7 @@ namespace WY_App.Utility
             HOperatorSet.GrabImageStart(hv_AcqHandle, -1);
         }
 
-        public static void DetectionDrawRectAOI(HWindow hWindow, HObject hImage, ref Parameter.Rect1 rect1)
+        public static void DetectionDrawRectAOI(HWindow hWindow, HObject hImage, ref Parameters.Rect1 rect1)
         {
             // 初始化本地和输出图片变量
             //hWindowControl1.HalconWindow.DispObj(Himage);//显示图像、Region、Xld
@@ -210,7 +210,7 @@ namespace WY_App.Utility
             //}
             Rectangle1.Dispose();
         }
-        public static void DetectionDrawRect2AOI(HWindow hWindow, HObject hImage, ref Parameter.Rect2 rect2)
+        public static void DetectionDrawRect2AOI(HWindow hWindow, HObject hImage, ref Parameters.Rect2 rect2)
         {
             HOperatorSet.SetColor(hWindow, "green");
             HOperatorSet.SetDraw(hWindow, "margin");
@@ -218,7 +218,7 @@ namespace WY_App.Utility
             hWindow.DrawRectangle2(out rect2.Row, out rect2.Colum, out rect2.Phi, out rect2.Length1, out rect2.Length2);
 
         }
-        public static void DetectionDrawLineAOI(HWindow hWindow, HObject hImage, ref Parameter.Rect1 rect1)
+        public static void DetectionDrawLineAOI(HWindow hWindow, HObject hImage, ref Parameters.Rect1 rect1)
         {
             HOperatorSet.SetColor(hWindow, "green");
             HOperatorSet.SetDraw(hWindow, "margin");
@@ -237,7 +237,7 @@ namespace WY_App.Utility
         /// <param name="rect1"></param>
         /// <param name="PointXY"></param>
         /// <returns></returns>
-        public static bool DetectionHalconLine(int i,HWindow hWindow, HObject hImage, Parameter.Rect1 rect1, ref HRect1 PointXY)
+        public static bool DetectionHalconLine(int i,HWindow hWindow, HObject hImage, Parameters.Rect1 rect1, ref HRect1 PointXY)
         {
             HObject ho_Contours, ho_Cross, ho_Contour;
 
@@ -325,7 +325,7 @@ namespace WY_App.Utility
         }
 
 
-        public static void DetectionHalconRect(int i, HWindow hWindow, HObject hImage, Parameter.Rect1 rect1, ref bool result)
+        public static void DetectionHalconRect(int i, HWindow hWindow, HObject hImage, Parameters.Rect1 rect1, ref bool result)
         {
             HObject ho_Rectangle, ho_ImageReduced;
             HObject ho_Regions, ho_Regions1, ho_ConnectedRegions, ho_ConnectedRegions1;
@@ -359,19 +359,19 @@ namespace WY_App.Utility
             ho_ImageReduced.Dispose();
             HOperatorSet.ReduceDomain(hImage, ho_Rectangle, out ho_ImageReduced);
             ho_Regions.Dispose();
-            HOperatorSet.Threshold(ho_ImageReduced, out ho_Regions, 0, Parameter.specificationsCam1[i].ThresholdLow);
+            HOperatorSet.Threshold(ho_ImageReduced, out ho_Regions, 0, Parameters.specificationsCam1[i].ThresholdLow);
             ho_Regions1.Dispose();
-            HOperatorSet.Threshold(ho_ImageReduced, out ho_Regions1, Parameter.specificationsCam1[i].ThresholdHigh, 255);
+            HOperatorSet.Threshold(ho_ImageReduced, out ho_Regions1, Parameters.specificationsCam1[i].ThresholdHigh, 255);
             ho_ConnectedRegions.Dispose();
             HOperatorSet.Connection(ho_Regions, out ho_ConnectedRegions);
             ho_ConnectedRegions1.Dispose();
             HOperatorSet.Connection(ho_Regions1, out ho_ConnectedRegions1);
             HOperatorSet.SetColor(hWindow, "red");
             ho_SelectedRegions.Dispose();
-            HOperatorSet.SelectShape(ho_ConnectedRegions, out ho_SelectedRegions, "area", "and", Parameter.specificationsCam1[i].AreaLow, Parameter.specificationsCam1[i].AreaHigh);
+            HOperatorSet.SelectShape(ho_ConnectedRegions, out ho_SelectedRegions, "area", "and", Parameters.specificationsCam1[i].AreaLow, Parameters.specificationsCam1[i].AreaHigh);
             HOperatorSet.DispObj(ho_SelectedRegions, hWindow);
             ho_SelectedRegions1.Dispose();
-            HOperatorSet.SelectShape(ho_ConnectedRegions1, out ho_SelectedRegions1, "area", "and", Parameter.specificationsCam1[i].AreaLow, Parameter.specificationsCam1[i].AreaHigh);
+            HOperatorSet.SelectShape(ho_ConnectedRegions1, out ho_SelectedRegions1, "area", "and", Parameters.specificationsCam1[i].AreaLow, Parameters.specificationsCam1[i].AreaHigh);
             HOperatorSet.DispObj(ho_SelectedRegions1, hWindow);
             hv_Area.Dispose(); hv_Row1.Dispose(); hv_Column1.Dispose();
             HOperatorSet.AreaCenter(ho_SelectedRegions, out hv_Area, out hv_Row1, out hv_Column1);
@@ -439,7 +439,7 @@ namespace WY_App.Utility
             //return true;
         }
 
-        public static void DetectionHalconRect1(int i, int j, HWindow hWindow, HObject hImage, Parameter.Rect1 rect1, ref bool result)
+        public static void DetectionHalconRect1(int i, int j, HWindow hWindow, HObject hImage, Parameters.Rect1 rect1, ref bool result)
         {
             HObject ho_Rectangle, ho_ImageReduced;
             HObject ho_Regions, ho_Regions1, ho_ConnectedRegions, ho_ConnectedRegions1;
@@ -473,19 +473,19 @@ namespace WY_App.Utility
             ho_ImageReduced.Dispose();
             HOperatorSet.ReduceDomain(hImage, ho_Rectangle, out ho_ImageReduced);
             ho_Regions.Dispose();
-            HOperatorSet.Threshold(ho_ImageReduced, out ho_Regions, 0, Parameter.specificationsCam2[i].ThresholdLow[j]);
+            HOperatorSet.Threshold(ho_ImageReduced, out ho_Regions, 0, Parameters.specificationsCam2[i].ThresholdLow[j]);
             ho_Regions1.Dispose();
-            HOperatorSet.Threshold(ho_ImageReduced, out ho_Regions1, Parameter.specificationsCam2[i].ThresholdHigh[j], 255);
+            HOperatorSet.Threshold(ho_ImageReduced, out ho_Regions1, Parameters.specificationsCam2[i].ThresholdHigh[j], 255);
             ho_ConnectedRegions.Dispose();
             HOperatorSet.Connection(ho_Regions, out ho_ConnectedRegions);
             ho_ConnectedRegions1.Dispose();
             HOperatorSet.Connection(ho_Regions1, out ho_ConnectedRegions1);
             HOperatorSet.SetColor(hWindow, "red");
             ho_SelectedRegions.Dispose();
-            HOperatorSet.SelectShape(ho_ConnectedRegions, out ho_SelectedRegions, "area", "and", Parameter.specificationsCam2[i].AreaLow[j], Parameter.specificationsCam2[i].AreaHigh[j]);
+            HOperatorSet.SelectShape(ho_ConnectedRegions, out ho_SelectedRegions, "area", "and", Parameters.specificationsCam2[i].AreaLow[j], Parameters.specificationsCam2[i].AreaHigh[j]);
             HOperatorSet.DispObj(ho_SelectedRegions, hWindow);
             ho_SelectedRegions1.Dispose();
-            HOperatorSet.SelectShape(ho_ConnectedRegions1, out ho_SelectedRegions1, "area", "and", Parameter.specificationsCam2[i].AreaLow[j], Parameter.specificationsCam2[i].AreaHigh[j]);
+            HOperatorSet.SelectShape(ho_ConnectedRegions1, out ho_SelectedRegions1, "area", "and", Parameters.specificationsCam2[i].AreaLow[j], Parameters.specificationsCam2[i].AreaHigh[j]);
             HOperatorSet.DispObj(ho_SelectedRegions1, hWindow);
             hv_Area.Dispose(); hv_Row1.Dispose(); hv_Column1.Dispose();
             HOperatorSet.AreaCenter(ho_SelectedRegions, out hv_Area, out hv_Row1, out hv_Column1);
@@ -552,7 +552,7 @@ namespace WY_App.Utility
             hv_Index1.Dispose();
             //return true;
         }
-        public static void DetectionHalconRect2(int i,int j, HWindow hWindow, HObject hImage, Parameter.Rect1 rect1, ref bool result)
+        public static void DetectionHalconRect2(int i,int j, HWindow hWindow, HObject hImage, Parameters.Rect1 rect1, ref bool result)
         {
             // Local iconic variables 
 
@@ -599,7 +599,7 @@ namespace WY_App.Utility
             HOperatorSet.AreaCenter(ho_ConnectedRegions, out hv_Area, out hv_Row, out hv_Column);
             //HOperatorSet.DispObj(ho_ImagePart, hWindow);
             ho_SelectedRegions.Dispose();
-            HOperatorSet.SelectShape(ho_ConnectedRegions, out ho_SelectedRegions, "area","and", Parameter.specificationsCam2[i].AreaLow[j], Parameter.specificationsCam2[i].AreaHigh[j]);
+            HOperatorSet.SelectShape(ho_ConnectedRegions, out ho_SelectedRegions, "area","and", Parameters.specificationsCam2[i].AreaLow[j], Parameters.specificationsCam2[i].AreaHigh[j]);
             HOperatorSet.SetColor(hWindow, "red");//red
             HOperatorSet.SetDraw(hWindow, "margin");
 
@@ -729,7 +729,7 @@ namespace WY_App.Utility
             HOperatorSet.SetTposition(hWindow, RowY1, ColumX);
             hv_anomaly_score.Dispose();
             HOperatorSet.GetDictTuple(hv_DLResult, "anomaly_score", out hv_anomaly_score);
-            if (hv_anomaly_score <= Parameter.specificationsCam1[i].DeepLearningRate)
+            if (hv_anomaly_score <= Parameters.specificationsCam1[i].DeepLearningRate)
             {
                 result = true;
                 using (HDevDisposeHelper dh = new HDevDisposeHelper())
@@ -794,7 +794,7 @@ namespace WY_App.Utility
             HOperatorSet.SetTposition(hWindow, rect1.Row1, rect1.Colum1);
             hv_anomaly_score.Dispose();
             HOperatorSet.GetDictTuple(hv_DLResult, "anomaly_score", out hv_anomaly_score);
-            if (hv_anomaly_score <= Parameter.specificationsCam2[i].DeepLearningRate)
+            if (hv_anomaly_score <= Parameters.specificationsCam2[i].DeepLearningRate)
             {
                 result = true;
                 using (HDevDisposeHelper dh = new HDevDisposeHelper())

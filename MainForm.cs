@@ -24,7 +24,7 @@ using TcpClient = WY_App.Utility.TcpClient;
 using Sunny.UI.Win32;
 using Newtonsoft.Json.Linq;
 using Sunny.UI;
-using static WY_App.Utility.Parameter;
+using static WY_App.Utility.Parameters;
 using OpenCvSharp.Dnn;
 using MvCamCtrl.NET;
 using static ODT.Common.LanguageTranslationConstants;
@@ -43,7 +43,7 @@ namespace WY_App
         Thread MainThread1;
         //Thread ImageThread;
 
-        public static Parameter.Rect1[] specifications;
+        public static Parameters.Rect1[] specifications;
         HWindow[] hWindows;
         public static List<HObject> ho_Image = new List<HObject>();
         public static List<HObject> ho_DefectImage = new List<HObject>();
@@ -89,70 +89,80 @@ namespace WY_App
             pictureBox1.Load(Application.StartupPath + "/image/logo.png");
             try
             {
-                Parameter.commministion = XMLHelper.BackSerialize<Parameter.Commministion>("Parameter/Commministion.xml");
+                Parameters.deviceName = XMLHelper.BackSerialize<Parameters.DeviceName>(@"D:\\DeviceName.xml");
             }
             catch
             {
-                Parameter.commministion = new Parameter.Commministion();
-                XMLHelper.serialize<Parameter.Commministion>(Parameter.commministion, "Parameter/Commministion.xml");
+                Parameters.deviceName = new Parameters.DeviceName();
+                XMLHelper.serialize<Parameters.DeviceName>(Parameters.deviceName, @"D:\\DeviceName.xml");
             }
-            if (!EnumDivice(Parameter.commministion.DeviceID))
+            if (!EnumDivice(Parameters.deviceName.DeviceID))
             {
                 注册机器 flg = new 注册机器();
                 flg.TransfEvent += DeviceID_TransfEvent;
                 flg.ShowDialog();
                 if (!EnumDivice(DeviceID))
                 {
-                    this.Close();
+                    Environment.Exit(1);
                     return;
                 }
             }
             try
             {
-                Parameter.counts = XMLHelper.BackSerialize<Parameter.Counts>("Parameter/CountsParams.xml");
+                Parameters.commministion = XMLHelper.BackSerialize<Parameters.Commministion>("Parameter/Commministion.xml");
             }
             catch
             {
-                Parameter.counts = new Parameter.Counts();
-                XMLHelper.serialize<Parameter.Counts>(Parameter.counts, "Parameter/CountsParams.xml");
+                Parameters.commministion = new Parameters.Commministion();
+                XMLHelper.serialize<Parameters.Commministion>(Parameters.commministion, "Parameter/Commministion.xml");
+            }
+            
+            try
+            {
+                Parameters.counts = XMLHelper.BackSerialize<Parameters.Counts>(Parameters.commministion.productName + "/CountsParams.xml");
+            }
+            catch
+            {
+                Parameters.counts = new Parameters.Counts();
+                XMLHelper.serialize<Parameters.Counts>(Parameters.counts, Parameters.commministion.productName + "/CountsParams.xml");
             }
             try
             {
-                Parameter.specificationsCam2[0] = XMLHelper.BackSerialize<Parameter.SpecificationsCam2>("Parameter/Cam2Specifications0.xml");
+                Parameters.specificationsCam2[0] = XMLHelper.BackSerialize<Parameters.SpecificationsCam2>(Parameters.commministion.productName + "/Cam2Specifications0.xml");
             }
             catch
             {
-                Parameter.specificationsCam2[0] = new Parameter.SpecificationsCam2();
-                XMLHelper.serialize<Parameter.SpecificationsCam2>(Parameter.specificationsCam2[0], "Parameter/Cam2Specifications0.xml");
+                Parameters.specificationsCam2[0] = new Parameters.SpecificationsCam2();
+                XMLHelper.serialize<Parameters.SpecificationsCam2>(Parameters.specificationsCam2[0], Parameters.commministion.productName + "/Cam2Specifications0.xml");
             }
 
             try
             {
-                Parameter.specificationsCam2[1] = XMLHelper.BackSerialize<Parameter.SpecificationsCam2>("Parameter/Cam2Specifications1.xml");
+                Parameters.specificationsCam2[1] = XMLHelper.BackSerialize<Parameters.SpecificationsCam2>(Parameters.commministion.productName + "/Cam2Specifications1.xml");
             }
             catch
             {
-                Parameter.specificationsCam2[1] = new Parameter.SpecificationsCam2();
-                XMLHelper.serialize<Parameter.SpecificationsCam2>(Parameter.specificationsCam2[1], "Parameter/Cam2Specifications1.xml");
+                Parameters.specificationsCam2[1] = new Parameters.SpecificationsCam2();
+                XMLHelper.serialize<Parameters.SpecificationsCam2>(Parameters.specificationsCam2[1], Parameters.commministion.productName + "/Cam2Specifications1.xml");
             }
             try
             {
-                Parameter.specificationsCam1[0] = XMLHelper.BackSerialize<Parameter.SpecificationsCam1>("Parameter/Cam1Specifications0.xml");
+                Parameters.specificationsCam1[0] = XMLHelper.BackSerialize<Parameters.SpecificationsCam1>(Parameters.commministion.productName + "/Cam1Specifications0.xml");
             }
             catch
             {
-                Parameter.specificationsCam1[0] = new Parameter.SpecificationsCam1();
-                XMLHelper.serialize<Parameter.SpecificationsCam1>(Parameter.specificationsCam1[0], "Parameter/Cam1Specifications0.xml");
+                Parameters.specificationsCam1[0] = new Parameters.SpecificationsCam1();
+                XMLHelper.serialize<Parameters.SpecificationsCam1>(Parameters.specificationsCam1[0], Parameters.commministion.productName + "/Cam1Specifications0.xml");
             }
 
             try
             {
-                Parameter.specificationsCam1[1] = XMLHelper.BackSerialize<Parameter.SpecificationsCam1>("Parameter/Cam1Specifications1.xml");
+                Parameters.specificationsCam1[1] = XMLHelper.BackSerialize<Parameters.SpecificationsCam1>(Parameters.commministion.productName + "/Cam1Specifications1.xml");
             }
             catch
             {
-                Parameter.specificationsCam1[1] = new Parameter.SpecificationsCam1();
-                XMLHelper.serialize<Parameter.SpecificationsCam1>(Parameter.specificationsCam1[1], "Parameter/Cam1Specifications1.xml");
+                Parameters.specificationsCam1[1] = new Parameters.SpecificationsCam1();
+                XMLHelper.serialize<Parameters.SpecificationsCam1>(Parameters.specificationsCam1[1], Parameters.commministion.productName + "/Cam1Specifications1.xml");
             }
             Halcon.Cam1Connect = Halcon.initalCamera("CAM0", ref Halcon.hv_AcqHandle0);
             if(Halcon.Cam1Connect)
@@ -245,7 +255,7 @@ namespace WY_App
                     MethodInvoker start = new MethodInvoker(() =>
                     {
 
-                        if (Parameter.commministion.PlcEnable)
+                        if (Parameters.commministion.PlcEnable)
                         {
                             if (HslCommunication.plc_connect_result)
                             {
@@ -263,7 +273,7 @@ namespace WY_App
                             lab_PLCStatus.Text = "禁用";
                             lab_PLCStatus.BackColor = Color.Gray;
                         }
-                        if (Parameter.commministion.TcpClientEnable)
+                        if (Parameters.commministion.TcpClientEnable)
                         {
                             if (TcpClient.TcpClientConnectResult)
                             {
@@ -281,7 +291,7 @@ namespace WY_App
                             lab_Client.Text = "禁用";
                             lab_Client.BackColor = Color.Gray;
                         }
-                        if (Parameter.commministion.TcpServerEnable)
+                        if (Parameters.commministion.TcpServerEnable)
                         {
                             if (TcpServer.TcpServerConnectResult)
                             {
@@ -347,7 +357,7 @@ namespace WY_App
             {
                 if(m_Pause)
                 {
-                    ushort ushort100 = HslCommunication._NetworkTcpDevice.ReadUInt16(Parameter.plcParams.Trigger_Detection1).Content; // 读取寄存器100的ushort值              
+                    ushort ushort100 = HslCommunication._NetworkTcpDevice.ReadUInt16(Parameters.plcParams.Trigger_Detection1).Content; // 读取寄存器100的ushort值              
                     if (ushort100 == 49)
                     {
                         uiDataGridView1.Rows[3].Cells[1].Style.BackColor = Color.Black;
@@ -356,17 +366,17 @@ namespace WY_App
                         uiDataGridView1.Rows[6].Cells[1].Style.BackColor = Color.Black;
                         uiDataGridView1.Rows[7].Cells[1].Style.BackColor = Color.Black;
                         
-                        AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Trigger_Detection1 + "触发信号:" + ushort100.ToString());
+                        AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Trigger_Detection1 + "触发信号:" + ushort100.ToString());
                         if (Halcon.Cam1Connect)
                         {
                             Halcon.GrabImage(Halcon.hv_AcqHandle0, out hImage[0]);
                         }
                         else
                         {
-                            HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Completion1, 6);
-                            AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Completion1 + "写入:" + "6");
+                            HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Completion1, 6);
+                            AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Completion1 + "写入:" + "6");
                         }
-                        HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Trigger_Detection1, 0);
+                        HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Trigger_Detection1, 0);
                         HOperatorSet.GetImageSize(hImage[0], out Halcon.hv_Width[0], out Halcon.hv_Height[0]);
                         HOperatorSet.SetPart(hWindows[0], 0, 0, -1, -1);//设置窗体的规格
                         HOperatorSet.DispObj(hImage[0], hWindows[0]);
@@ -375,12 +385,12 @@ namespace WY_App
                         DateTime dtNow = System.DateTime.Now;  // 获取系统当前时间
                         strDateTime = dtNow.ToString("yyyyMMddHHmmss");
                         strDateTimeDay = dtNow.ToString("yyyy-MM-dd");
-                        if (Parameter.specificationsCam1[0].SaveOrigalImage)
+                        if (Parameters.specificationsCam1[0].SaveOrigalImage)
                         {
                             setCallBack = SaveImages;
                             this.Invoke(setCallBack, 0, hImage[0], "IN/Cam1-IN");
                         }
-                        if (value1[0] - Parameter.specificationsCam1[0].胶宽.value < Parameter.specificationsCam1[0].胶宽.min || value1[0] - Parameter.specificationsCam1[0].胶宽.value > Parameter.specificationsCam1[0].胶宽.max)
+                        if (value1[0] - Parameters.specificationsCam1[0].胶宽.value < Parameters.specificationsCam1[0].胶宽.min || value1[0] - Parameters.specificationsCam1[0].胶宽.value > Parameters.specificationsCam1[0].胶宽.max)
                         {
                             uiDataGridView1.Rows[0].Cells[1].Style.BackColor = Color.Red;
                             uiDataGridView1.Rows[0].Cells[1].Value = value1[0].ToString("0.00000");
@@ -390,7 +400,7 @@ namespace WY_App
                             uiDataGridView1.Rows[0].Cells[1].Style.BackColor = Color.Green;
                             uiDataGridView1.Rows[0].Cells[1].Value = value1[0].ToString("0.00000");
                         }
-                        if (value1[1] - Parameter.specificationsCam1[0].胶高.value < Parameter.specificationsCam1[0].胶高.min || value1[1] - Parameter.specificationsCam1[0].胶高.value > Parameter.specificationsCam1[0].胶高.max)
+                        if (value1[1] - Parameters.specificationsCam1[0].胶高.value < Parameters.specificationsCam1[0].胶高.min || value1[1] - Parameters.specificationsCam1[0].胶高.value > Parameters.specificationsCam1[0].胶高.max)
                         {
                             uiDataGridView1.Rows[1].Cells[1].Style.BackColor = Color.Red;
                             uiDataGridView1.Rows[1].Cells[1].Value = value1[1].ToString("0.00000");
@@ -401,7 +411,7 @@ namespace WY_App
                             uiDataGridView1.Rows[1].Cells[1].Value = value1[1].ToString("0.00000");
                         }
 
-                        if (value1[2] - Parameter.specificationsCam1[0].胶线.value < Parameter.specificationsCam1[0].胶线.min || value1[2] - Parameter.specificationsCam1[0].胶线.value > Parameter.specificationsCam1[0].胶线.max)
+                        if (value1[2] - Parameters.specificationsCam1[0].胶线.value < Parameters.specificationsCam1[0].胶线.min || value1[2] - Parameters.specificationsCam1[0].胶线.value > Parameters.specificationsCam1[0].胶线.max)
                         {
                             uiDataGridView1.Rows[2].Cells[1].Style.BackColor = Color.Red;
                             uiDataGridView1.Rows[2].Cells[1].Value = value1[2].ToString("0.00000");
@@ -415,60 +425,60 @@ namespace WY_App
 
                         if (testReslut1[0] && testReslut1[1] && testReslut1[2] && testReslut1[3] && testReslut1[4])//OK
                         {
-                            if (Parameter.specificationsCam1[0].SaveDefeatImage)
+                            if (Parameters.specificationsCam1[0].SaveDefeatImage)
                             {
                                 setCallBack = SaveImages;
                                 this.Invoke(setCallBack, 0, hObjectOut0, "OK/Cam1-Out");
                             }
-                            Parameter.counts.Counts1[4]++;
-                            uiDataGridView1.Rows[7].Cells[1].Value = Parameter.counts.Counts1[4];
+                            Parameters.counts.Counts1[4]++;
+                            uiDataGridView1.Rows[7].Cells[1].Value = Parameters.counts.Counts1[4];
                             uiDataGridView1.Rows[7].Cells[1].Style.BackColor = Color.Green;
-                            HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Completion1, 5);
-                            AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Completion1 + "写入:" + "5");
+                            HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Completion1, 5);
+                            AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Completion1 + "写入:" + "5");
                         }
                         else
                         {
-                            Parameter.counts.Counts1[3]++;
-                            uiDataGridView1.Rows[6].Cells[1].Value = Parameter.counts.Counts1[3];
+                            Parameters.counts.Counts1[3]++;
+                            uiDataGridView1.Rows[6].Cells[1].Value = Parameters.counts.Counts1[3];
                             uiDataGridView1.Rows[6].Cells[1].Style.BackColor = Color.Green;
                             if (testReslut1[4])//胶线不良
                             {
-                                if (Parameter.specificationsCam1[0].SaveDefeatImage)
+                                if (Parameters.specificationsCam1[0].SaveDefeatImage)
                                 {
                                     setCallBack = SaveImages;
                                     this.Invoke(setCallBack, 0, hObjectOut0, "胶线不良/Cam1-Out");
                                 }
-                                Parameter.counts.Counts1[0]++;
-                                uiDataGridView1.Rows[3].Cells[1].Value = Parameter.counts.Counts1[0];
+                                Parameters.counts.Counts1[0]++;
+                                uiDataGridView1.Rows[3].Cells[1].Value = Parameters.counts.Counts1[0];
                                 uiDataGridView1.Rows[3].Cells[1].Style.BackColor = Color.Red;
-                                HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Completion1, 5);
-                                AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Completion1 + "写入:" + "5");
+                                HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Completion1, 5);
+                                AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Completion1 + "写入:" + "5");
                             }
                             else if (testReslut1[3])//胶面不良
                             {
-                                if (Parameter.specificationsCam1[0].SaveDefeatImage)
+                                if (Parameters.specificationsCam1[0].SaveDefeatImage)
                                 {
                                     setCallBack = SaveImages;
                                     this.Invoke(setCallBack, 0, hObjectOut0, "胶面不良/Cam1-Out");
                                 }
-                                Parameter.counts.Counts1[1]++;
-                                uiDataGridView1.Rows[4].Cells[1].Value = Parameter.counts.Counts1[1];
+                                Parameters.counts.Counts1[1]++;
+                                uiDataGridView1.Rows[4].Cells[1].Value = Parameters.counts.Counts1[1];
                                 uiDataGridView1.Rows[4].Cells[1].Style.BackColor = Color.Green;
-                                HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Completion1, 5);
-                                AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Completion1 + "写入:" + "5");
+                                HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Completion1, 5);
+                                AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Completion1 + "写入:" + "5");
                             }
                             else //尺寸不良
                             {
-                                if (Parameter.specificationsCam1[0].SaveDefeatImage)
+                                if (Parameters.specificationsCam1[0].SaveDefeatImage)
                                 {
                                     setCallBack = SaveImages;
                                     this.Invoke(setCallBack, 0, hObjectOut0, "尺寸不良/Cam1-Out");
                                 }
-                                Parameter.counts.Counts1[2]++;
-                                uiDataGridView1.Rows[5].Cells[1].Value = Parameter.counts.Counts1[2];
+                                Parameters.counts.Counts1[2]++;
+                                uiDataGridView1.Rows[5].Cells[1].Value = Parameters.counts.Counts1[2];
                                 uiDataGridView1.Rows[5].Cells[1].Style.BackColor = Color.Green;
-                                HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Completion1, 5);
-                                AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Completion1 + "写入:" + "6");
+                                HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Completion1, 5);
+                                AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Completion1 + "写入:" + "6");
                             }
                         }
                     }
@@ -480,29 +490,29 @@ namespace WY_App
                         uiDataGridView1.Rows[6].Cells[2].Style.BackColor = Color.Black;
                         uiDataGridView1.Rows[7].Cells[2].Style.BackColor = Color.Black;
                         
-                        AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Trigger_Detection1 + "触发信号:" + ushort100.ToString());
+                        AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Trigger_Detection1 + "触发信号:" + ushort100.ToString());
                         if (Halcon.Cam1Connect)
                         {
                             Halcon.GrabImage(Halcon.hv_AcqHandle0, out hImage[1]);
                         }
                         else
                         {
-                            HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Completion1, 6);
-                            AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Completion1 + "写入:" + "6");
+                            HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Completion1, 6);
+                            AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Completion1 + "写入:" + "6");
                         }
-                        HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Trigger_Detection1, 0);                       
+                        HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Trigger_Detection1, 0);                       
                         HOperatorSet.GetImageSize(hImage[1], out Halcon.hv_Width[1], out Halcon.hv_Height[1]);
                         HOperatorSet.SetPart(hWindows[1], 0, 0, -1, -1);//设置窗体的规格
                         HOperatorSet.DispObj(hImage[1], hWindows[1]);
                         检测1.Detection(1, hWindows[1], hImage[1], ref testReslut1, ref value1);
                         HOperatorSet.DumpWindowImage(out hObjectOut0, hWindows[1]);
 
-                        if (Parameter.specificationsCam1[0].SaveOrigalImage)
+                        if (Parameters.specificationsCam1[0].SaveOrigalImage)
                         {
                             setCallBack = SaveImages;
                             this.Invoke(setCallBack, 1, hImage[1], "IN/Cam1-IN");
                         }
-                        if (value1[0] - Parameter.specificationsCam1[0].胶宽.value < Parameter.specificationsCam1[0].胶宽.min || value1[0] - Parameter.specificationsCam1[0].胶宽.value > Parameter.specificationsCam1[0].胶宽.max)
+                        if (value1[0] - Parameters.specificationsCam1[0].胶宽.value < Parameters.specificationsCam1[0].胶宽.min || value1[0] - Parameters.specificationsCam1[0].胶宽.value > Parameters.specificationsCam1[0].胶宽.max)
                         {
                             uiDataGridView1.Rows[0].Cells[2].Style.BackColor = Color.Red;
                             uiDataGridView1.Rows[0].Cells[2].Value = value1[0].ToString("0.00000");
@@ -512,7 +522,7 @@ namespace WY_App
                             uiDataGridView1.Rows[0].Cells[2].Style.BackColor = Color.Green;
                             uiDataGridView1.Rows[0].Cells[2].Value = value1[0].ToString("0.00000");
                         }
-                        if (value1[1] - Parameter.specificationsCam1[0].胶高.value < Parameter.specificationsCam1[0].胶高.min || value1[1] - Parameter.specificationsCam1[0].胶高.value > Parameter.specificationsCam1[0].胶高.max)
+                        if (value1[1] - Parameters.specificationsCam1[0].胶高.value < Parameters.specificationsCam1[0].胶高.min || value1[1] - Parameters.specificationsCam1[0].胶高.value > Parameters.specificationsCam1[0].胶高.max)
                         {
                             uiDataGridView1.Rows[1].Cells[2].Style.BackColor = Color.Red;
                             uiDataGridView1.Rows[1].Cells[2].Value = value1[1].ToString("0.00000");
@@ -523,7 +533,7 @@ namespace WY_App
                             uiDataGridView1.Rows[1].Cells[2].Value = value1[1].ToString("0.00000");
                         }
 
-                        if (value1[2] - Parameter.specificationsCam1[0].胶线.value < Parameter.specificationsCam1[0].胶线.min || value1[2] - Parameter.specificationsCam1[0].胶线.value > Parameter.specificationsCam1[0].胶线.max)
+                        if (value1[2] - Parameters.specificationsCam1[0].胶线.value < Parameters.specificationsCam1[0].胶线.min || value1[2] - Parameters.specificationsCam1[0].胶线.value > Parameters.specificationsCam1[0].胶线.max)
                         {
                             uiDataGridView1.Rows[2].Cells[2].Style.BackColor = Color.Red;
                             uiDataGridView1.Rows[2].Cells[2].Value = value1[2].ToString("0.00000");
@@ -535,63 +545,63 @@ namespace WY_App
                         }
                         if (testReslut1[0] && testReslut1[1] && testReslut1[2] && testReslut1[3] && testReslut1[4])//OK
                         {
-                            if (Parameter.specificationsCam1[0].SaveDefeatImage)
+                            if (Parameters.specificationsCam1[0].SaveDefeatImage)
                             {
                                 setCallBack = SaveImages;
                                 this.Invoke(setCallBack, 0, hObjectOut0, "OK/Cam1-Out");
                             }
-                            Parameter.counts.Counts2[4]++;
-                            uiDataGridView1.Rows[7].Cells[2].Value = Parameter.counts.Counts2[4];
+                            Parameters.counts.Counts2[4]++;
+                            uiDataGridView1.Rows[7].Cells[2].Value = Parameters.counts.Counts2[4];
                             uiDataGridView1.Rows[7].Cells[2].Style.BackColor = Color.Green;
-                            HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Completion1, 5);
-                            AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Completion1 + "写入:" + "5");
+                            HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Completion1, 5);
+                            AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Completion1 + "写入:" + "5");
                         }
                         else
                         {
-                            Parameter.counts.Counts2[3]++;
-                            uiDataGridView1.Rows[6].Cells[2].Value = Parameter.counts.Counts2[3];
+                            Parameters.counts.Counts2[3]++;
+                            uiDataGridView1.Rows[6].Cells[2].Value = Parameters.counts.Counts2[3];
                             uiDataGridView1.Rows[6].Cells[2].Style.BackColor = Color.Green;
                             if (testReslut1[4])//胶线不良
                             {
-                                if (Parameter.specificationsCam1[0].SaveDefeatImage)
+                                if (Parameters.specificationsCam1[0].SaveDefeatImage)
                                 {
                                     setCallBack = SaveImages;
                                     this.Invoke(setCallBack, 1, hObjectOut0, "胶线不良/Cam1-Out");
                                 }
-                                Parameter.counts.Counts2[0]++;
-                                uiDataGridView1.Rows[3].Cells[2].Value = Parameter.counts.Counts2[0];
+                                Parameters.counts.Counts2[0]++;
+                                uiDataGridView1.Rows[3].Cells[2].Value = Parameters.counts.Counts2[0];
                                 uiDataGridView1.Rows[3].Cells[2].Style.BackColor = Color.Green;
-                                HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Completion1, 8);
-                                AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Completion1 + "写入:" + "5");
+                                HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Completion1, 8);
+                                AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Completion1 + "写入:" + "5");
                             }
                             else if(testReslut1[3])//胶面不良
                             {
-                                if (Parameter.specificationsCam1[0].SaveDefeatImage)
+                                if (Parameters.specificationsCam1[0].SaveDefeatImage)
                                 {
                                     setCallBack = SaveImages;
                                     this.Invoke(setCallBack, 1, hObjectOut0, "胶面不良/Cam1-Out");
                                 }
-                                Parameter.counts.Counts2[1]++;
-                                uiDataGridView1.Rows[4].Cells[2].Value = Parameter.counts.Counts2[1];
+                                Parameters.counts.Counts2[1]++;
+                                uiDataGridView1.Rows[4].Cells[2].Value = Parameters.counts.Counts2[1];
                                 uiDataGridView1.Rows[4].Cells[2].Style.BackColor = Color.Green;
-                                HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Completion1, 5);
-                                AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Completion1 + "写入:" + "5");
+                                HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Completion1, 5);
+                                AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Completion1 + "写入:" + "5");
                             }
                             else //尺寸不良
                             {
-                                if (Parameter.specificationsCam1[0].SaveDefeatImage)
+                                if (Parameters.specificationsCam1[0].SaveDefeatImage)
                                 {
                                     setCallBack = SaveImages;
                                     this.Invoke(setCallBack, 1, hObjectOut0, "尺寸不良/Cam1-Out");
                                 }
-                                Parameter.counts.Counts2[2]++;
-                                uiDataGridView1.Rows[5].Cells[2].Value = Parameter.counts.Counts2[2];
+                                Parameters.counts.Counts2[2]++;
+                                uiDataGridView1.Rows[5].Cells[2].Value = Parameters.counts.Counts2[2];
                                 uiDataGridView1.Rows[5].Cells[2].Style.BackColor = Color.Green;
-                                HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Completion1, 6);
-                                AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Completion1 + "写入:" + "6");
+                                HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Completion1, 6);
+                                AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Completion1 + "写入:" + "6");
                             }
                         }
-                        CleanFile(Parameter.commministion.ImageSavePath);
+                        CleanFile(Parameters.commministion.ImageSavePath);
                     }
                 }         
                 Thread.Sleep(50);
@@ -608,7 +618,7 @@ namespace WY_App
                 {
                     DirectoryInfo subdir = new DirectoryInfo(i.FullName);
                     DateTime dates = Convert.ToDateTime(i.CreationTime);
-                    if (dates <= DateTime.Now.AddDays(-Parameter.commministion.LogFileExistDay))
+                    if (dates <= DateTime.Now.AddDays(-Parameters.commministion.LogFileExistDay))
                     {
                         subdir.Delete(true);          //删除子目录和文件
                     }        
@@ -616,7 +626,7 @@ namespace WY_App
                 else
                 {
                     DateTime dates = Convert.ToDateTime(i.CreationTime);
-                    if (dates <= DateTime.Now.AddDays(-Parameter.commministion.LogFileExistDay))
+                    if (dates <= DateTime.Now.AddDays(-Parameters.commministion.LogFileExistDay))
                     {
                         File.Delete(i.FullName);      //删除指定文件
                     }
@@ -635,7 +645,7 @@ namespace WY_App
         {
 
             string stfFileNameOut = path + i + "-" + strDateTime;  // 默认的图像保存名称
-            string pathOut = Parameter.commministion.ImageSavePath + "/" + strDateTimeDay + "/";
+            string pathOut = Parameters.commministion.ImageSavePath + "/" + strDateTimeDay + "/";
             if (!System.IO.Directory.Exists(pathOut))
             {
                 System.IO.Directory.CreateDirectory(pathOut);//不存在就创建文件夹
@@ -649,7 +659,7 @@ namespace WY_App
             {
                 if (m_Pause)
                 {
-                    ushort ushort100 = HslCommunication._NetworkTcpDevice.ReadUInt16(Parameter.plcParams.Trigger_Detection2).Content; // 读取寄存器100的ushort值              
+                    ushort ushort100 = HslCommunication._NetworkTcpDevice.ReadUInt16(Parameters.plcParams.Trigger_Detection2).Content; // 读取寄存器100的ushort值              
                     if (ushort100 == 49)
                     {
                        
@@ -658,23 +668,23 @@ namespace WY_App
                         uiDataGridView2.Rows[9].Cells[1].Style.BackColor = Color.Black;
 						uiDataGridView2.Rows[10].Cells[1].Style.BackColor = Color.Black;//
 						uiDataGridView2.Rows[11].Cells[1].Style.BackColor = Color.Black;//
-						AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Trigger_Detection2 + "触发信号:" + ushort100.ToString());
+						AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Trigger_Detection2 + "触发信号:" + ushort100.ToString());
                         if (Halcon.Cam2Connect)
                         {
                             Halcon.GrabImage(Halcon.hv_AcqHandle1, out hImage2[0]);
                         }
                         else
                         {
-                            HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Completion2, 6);
-                            AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Completion2 + "写入:" + "6");
+                            HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Completion2, 6);
+                            AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Completion2 + "写入:" + "6");
                         }
-                        HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Trigger_Detection2, 0);
+                        HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Trigger_Detection2, 0);
                         HOperatorSet.GetImageSize(hImage2[0], out Halcon.hv_Width[2], out Halcon.hv_Height[2]);
                         HOperatorSet.SetPart(hWindows[2], 0, 0, -1, -1);//设置窗体的规格
                         HOperatorSet.DispObj(hImage2[0], hWindows[2]);
                         检测2.Detection(0, hWindows[2], hImage2[0], ref testReslut2, ref value2);
                         HOperatorSet.DumpWindowImage(out hObjectOut1, hWindows[2]);
-                        if (Parameter.specificationsCam2[0].SaveOrigalImage)
+                        if (Parameters.specificationsCam2[0].SaveOrigalImage)
                         {
                             setCallBack = SaveImages;
                             this.Invoke(setCallBack, 0, hImage2[0], "IN/Cam2-IN");
@@ -682,7 +692,7 @@ namespace WY_App
                                             
                         for (int index = 0; index < 7; index++)
                         {
-							if (value2[index] - Parameter.specificationsCam2[0].检测规格[index].value < Parameter.specificationsCam2[0].检测规格[index].min || value2[index] - Parameter.specificationsCam2[0].检测规格[index].value > Parameter.specificationsCam2[0].检测规格[index].max)
+							if (value2[index] - Parameters.specificationsCam2[0].检测规格[index].value < Parameters.specificationsCam2[0].检测规格[index].min || value2[index] - Parameters.specificationsCam2[0].检测规格[index].value > Parameters.specificationsCam2[0].检测规格[index].max)
 							{
 								uiDataGridView2.Rows[index].Cells[1].Style.BackColor = Color.Red;
 								uiDataGridView2.Rows[index].Cells[1].Value = value2[index].ToString("0.00000");
@@ -695,55 +705,55 @@ namespace WY_App
 						}
 						if (testReslut2[0] && testReslut2[1] && testReslut2[2] && testReslut2[3] && testReslut2[4] && testReslut2[5] && testReslut2[6] && testReslut2[7])//OK
                         {
-                            Parameter.counts.Counts3[4]++;
-                            uiDataGridView2.Rows[11].Cells[1].Value = Parameter.counts.Counts3[4];
+                            Parameters.counts.Counts3[4]++;
+                            uiDataGridView2.Rows[11].Cells[1].Value = Parameters.counts.Counts3[4];
                             uiDataGridView2.Rows[11].Cells[1].Style.BackColor = Color.Green;
-                            HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Completion2, 5);
-                            AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Completion2 + "写入:" + "5");
+                            HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Completion2, 5);
+                            AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Completion2 + "写入:" + "5");
                         }
                         else
                         {
-                            Parameter.counts.Counts3[3]++;
-                            uiDataGridView2.Rows[10].Cells[1].Value = Parameter.counts.Counts3[3];
+                            Parameters.counts.Counts3[3]++;
+                            uiDataGridView2.Rows[10].Cells[1].Value = Parameters.counts.Counts3[3];
                             uiDataGridView2.Rows[10].Cells[1].Style.BackColor = Color.Red;
                             if (testReslut2[1])//胶面不良
                             {
-                                if (Parameter.specificationsCam2[0].SaveDefeatImage)
+                                if (Parameters.specificationsCam2[0].SaveDefeatImage)
                                 {
                                     setCallBack = SaveImages;
                                     this.Invoke(setCallBack, 0, hObjectOut1, "胶面不良/Cam2-Out");
                                 }
-                                Parameter.counts.Counts3[0]++;
-                                uiDataGridView2.Rows[7].Cells[1].Value = Parameter.counts.Counts3[0];
+                                Parameters.counts.Counts3[0]++;
+                                uiDataGridView2.Rows[7].Cells[1].Value = Parameters.counts.Counts3[0];
                                 uiDataGridView2.Rows[7].Cells[1].Style.BackColor = Color.Red;
-                                HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Completion2, 8);
-                                AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Completion2 + "写入:" + "8");
+                                HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Completion2, 8);
+                                AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Completion2 + "写入:" + "8");
                             }
                             else if (testReslut2[0]|| testReslut2[2])//料面不良
                             {
-                                if (Parameter.specificationsCam2[0].SaveDefeatImage)
+                                if (Parameters.specificationsCam2[0].SaveDefeatImage)
                                 {
                                     setCallBack = SaveImages;
                                     this.Invoke(setCallBack, 0, hObjectOut1, "料面不良/Cam2-Out");
                                 }
-                                Parameter.counts.Counts3[1]++;
-                                uiDataGridView2.Rows[8].Cells[1].Value = Parameter.counts.Counts3[1];
+                                Parameters.counts.Counts3[1]++;
+                                uiDataGridView2.Rows[8].Cells[1].Value = Parameters.counts.Counts3[1];
                                 uiDataGridView2.Rows[8].Cells[1].Style.BackColor = Color.Red;
-                                HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Completion2, 8);
-                                AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Completion2 + "写入:" + "8");
+                                HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Completion2, 8);
+                                AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Completion2 + "写入:" + "8");
                             }
                             else //尺寸不良
                             {
-                                if (Parameter.specificationsCam2[0].SaveDefeatImage)
+                                if (Parameters.specificationsCam2[0].SaveDefeatImage)
                                 {
                                     setCallBack = SaveImages;
                                     this.Invoke(setCallBack, 0, hObjectOut1, "尺寸不良/Cam2-Out");
                                 }
-                                Parameter.counts.Counts3[2]++;
-                                uiDataGridView2.Rows[9].Cells[1].Value = Parameter.counts.Counts3[2];
+                                Parameters.counts.Counts3[2]++;
+                                uiDataGridView2.Rows[9].Cells[1].Value = Parameters.counts.Counts3[2];
                                 uiDataGridView2.Rows[9].Cells[1].Style.BackColor = Color.Red;
-                                HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Completion2, 6);
-                                AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Completion2 + "写入:" + "6");
+                                HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Completion2, 6);
+                                AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Completion2 + "写入:" + "6");
                             }
                         }
                     }
@@ -755,7 +765,7 @@ namespace WY_App
                         uiDataGridView2.Rows[9].Cells[2].Style.BackColor = Color.Black;
 						uiDataGridView2.Rows[10].Cells[2].Style.BackColor = Color.Black;
 						uiDataGridView2.Rows[11].Cells[2].Style.BackColor = Color.Black;
-						AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Trigger_Detection2 + "触发信号:" + ushort100.ToString());
+						AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Trigger_Detection2 + "触发信号:" + ushort100.ToString());
                        
                         if (Halcon.Cam2Connect)
                         {
@@ -772,16 +782,16 @@ namespace WY_App
                         }
                         else
                         {
-                            HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Completion2, 6);
-                            AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Completion2 + "写入:" + "6");
+                            HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Completion2, 6);
+                            AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Completion2 + "写入:" + "6");
                         }
-                        HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Trigger_Detection2, 0);                       
+                        HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Trigger_Detection2, 0);                       
                         HOperatorSet.GetImageSize(hImage2[1], out Halcon.hv_Width[3], out Halcon.hv_Height[3]);
                         HOperatorSet.SetPart(hWindows[3], 0, 0, -1, -1);//设置窗体的规格
                         HOperatorSet.DispObj(hImage2[1], hWindows[3]);
                         检测2.Detection(1, hWindows[3], hImage2[1], ref testReslut2, ref value2);
                         HOperatorSet.DumpWindowImage(out hObjectOut1, hWindows[3]);
-                        if (Parameter.specificationsCam2[0].SaveOrigalImage)
+                        if (Parameters.specificationsCam2[0].SaveOrigalImage)
                         {
                             setCallBack = SaveImages;
                             this.Invoke(setCallBack, 1, hImage2[1], "IN/Cam2-IN");
@@ -789,7 +799,7 @@ namespace WY_App
 
                         for (int index = 0; index < 7; index++)
 						{
-							if (value2[index] - Parameter.specificationsCam2[0].检测规格[index].value < Parameter.specificationsCam2[0].检测规格[index].min || value2[index] - Parameter.specificationsCam2[0].检测规格[index].value > Parameter.specificationsCam2[0].检测规格[index].max)
+							if (value2[index] - Parameters.specificationsCam2[0].检测规格[index].value < Parameters.specificationsCam2[0].检测规格[index].min || value2[index] - Parameters.specificationsCam2[0].检测规格[index].value > Parameters.specificationsCam2[0].检测规格[index].max)
 							{
 								uiDataGridView2.Rows[index].Cells[2].Style.BackColor = Color.Red;
 								uiDataGridView2.Rows[index].Cells[2].Value = value2[index].ToString("0.00000");
@@ -802,55 +812,55 @@ namespace WY_App
 						}					
 						if (testReslut2[0] && testReslut2[1] && testReslut2[2] && testReslut2[3] && testReslut2[4] && testReslut2[5] && testReslut2[6] && testReslut2[7])//OK
                         {
-                            Parameter.counts.Counts4[4]++;
-                            uiDataGridView2.Rows[11].Cells[2].Value = Parameter.counts.Counts4[4];
+                            Parameters.counts.Counts4[4]++;
+                            uiDataGridView2.Rows[11].Cells[2].Value = Parameters.counts.Counts4[4];
                             uiDataGridView2.Rows[11].Cells[2].Style.BackColor = Color.Green;
-                            HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Completion2, 5);
-                            AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Completion2 + "写入:" + "5");
+                            HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Completion2, 5);
+                            AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Completion2 + "写入:" + "5");
                         }
                         else
                         {
-                            Parameter.counts.Counts4[3]++;
-                            uiDataGridView2.Rows[10].Cells[2].Value = Parameter.counts.Counts4[3];
+                            Parameters.counts.Counts4[3]++;
+                            uiDataGridView2.Rows[10].Cells[2].Value = Parameters.counts.Counts4[3];
                             uiDataGridView2.Rows[10].Cells[2].Style.BackColor = Color.Red;
                             if (testReslut2[1])//胶面不良
                             {
-                                if (Parameter.specificationsCam2[0].SaveDefeatImage)
+                                if (Parameters.specificationsCam2[0].SaveDefeatImage)
                                 {
                                     setCallBack = SaveImages;
                                     this.Invoke(setCallBack, 1, hObjectOut1, "胶面不良/Cam2-Out");
                                 }
-                                Parameter.counts.Counts4[0]++;
-                                uiDataGridView2.Rows[7].Cells[2].Value = Parameter.counts.Counts4[0];
+                                Parameters.counts.Counts4[0]++;
+                                uiDataGridView2.Rows[7].Cells[2].Value = Parameters.counts.Counts4[0];
                                 uiDataGridView2.Rows[7].Cells[2].Style.BackColor = Color.Red;
-                                HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Completion2, 8);
-                                AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Completion2 + "写入:" + "8");
+                                HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Completion2, 8);
+                                AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Completion2 + "写入:" + "8");
                             }
                             else if (testReslut2[0] || testReslut2[2])//料面不良
                             {
-                                if (Parameter.specificationsCam2[0].SaveDefeatImage)
+                                if (Parameters.specificationsCam2[0].SaveDefeatImage)
                                 {
                                     setCallBack = SaveImages;
                                     this.Invoke(setCallBack, 1, hObjectOut1, "料面不良/Cam2-Out");
                                 }
-                                Parameter.counts.Counts4[1]++;
-                                uiDataGridView2.Rows[8].Cells[2].Value = Parameter.counts.Counts4[1];
+                                Parameters.counts.Counts4[1]++;
+                                uiDataGridView2.Rows[8].Cells[2].Value = Parameters.counts.Counts4[1];
                                 uiDataGridView2.Rows[8].Cells[2].Style.BackColor = Color.Red;
-                                HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Completion2, 8);
-                                AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Completion2 + "写入:" + "8");
+                                HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Completion2, 8);
+                                AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Completion2 + "写入:" + "8");
                             }
                             else //尺寸不良
                             {
-                                if (Parameter.specificationsCam2[0].SaveDefeatImage)
+                                if (Parameters.specificationsCam2[0].SaveDefeatImage)
                                 {
                                     setCallBack = SaveImages;
                                     this.Invoke(setCallBack, 1, hObjectOut1, "尺寸不良/Cam2-Out");
                                 }
-                                Parameter.counts.Counts4[2]++;
-                                uiDataGridView2.Rows[9].Cells[2].Value = Parameter.counts.Counts4[2];
+                                Parameters.counts.Counts4[2]++;
+                                uiDataGridView2.Rows[9].Cells[2].Value = Parameters.counts.Counts4[2];
                                 uiDataGridView2.Rows[9].Cells[2].Style.BackColor = Color.Red;
-                                HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Completion2, 6);
-                                AlarmList.Add("IP:" + Parameter.commministion.PlcIpAddress + "Port:" + Parameter.commministion.PlcIpPort + "Add:" + Parameter.plcParams.Completion2 + "写入:" + "6");
+                                HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Completion2, 6);
+                                AlarmList.Add("IP:" + Parameters.commministion.PlcIpAddress + "Port:" + Parameters.commministion.PlcIpPort + "Add:" + Parameters.plcParams.Completion2 + "写入:" + "6");
                             }
                         }   
                     }
@@ -892,28 +902,28 @@ namespace WY_App
         {
             if (MessageBox.Show("确定关闭程序吗？", "软件关闭提示", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                Parameter.counts.Counts1[0] = (int)uiDataGridView1.Rows[3].Cells[1].Value;
-                Parameter.counts.Counts1[1] = (int)uiDataGridView1.Rows[4].Cells[1].Value;
-                Parameter.counts.Counts1[2] = (int)uiDataGridView1.Rows[5].Cells[1].Value;
-                Parameter.counts.Counts1[3] = (int)uiDataGridView1.Rows[6].Cells[1].Value;
-                Parameter.counts.Counts1[4] = (int)uiDataGridView1.Rows[6].Cells[1].Value;
-                Parameter.counts.Counts2[0] = (int)uiDataGridView1.Rows[3].Cells[2].Value;
-                Parameter.counts.Counts2[1] = (int)uiDataGridView1.Rows[4].Cells[2].Value;
-                Parameter.counts.Counts2[2] = (int)uiDataGridView1.Rows[5].Cells[2].Value;
-                Parameter.counts.Counts2[3] = (int)uiDataGridView1.Rows[6].Cells[2].Value;
-                Parameter.counts.Counts2[4] = (int)uiDataGridView1.Rows[6].Cells[2].Value;
+                Parameters.counts.Counts1[0] = (int)uiDataGridView1.Rows[3].Cells[1].Value;
+                Parameters.counts.Counts1[1] = (int)uiDataGridView1.Rows[4].Cells[1].Value;
+                Parameters.counts.Counts1[2] = (int)uiDataGridView1.Rows[5].Cells[1].Value;
+                Parameters.counts.Counts1[3] = (int)uiDataGridView1.Rows[6].Cells[1].Value;
+                Parameters.counts.Counts1[4] = (int)uiDataGridView1.Rows[6].Cells[1].Value;
+                Parameters.counts.Counts2[0] = (int)uiDataGridView1.Rows[3].Cells[2].Value;
+                Parameters.counts.Counts2[1] = (int)uiDataGridView1.Rows[4].Cells[2].Value;
+                Parameters.counts.Counts2[2] = (int)uiDataGridView1.Rows[5].Cells[2].Value;
+                Parameters.counts.Counts2[3] = (int)uiDataGridView1.Rows[6].Cells[2].Value;
+                Parameters.counts.Counts2[4] = (int)uiDataGridView1.Rows[6].Cells[2].Value;
 
-                Parameter.counts.Counts3[0] = (int)uiDataGridView2.Rows[7].Cells[1].Value;
-                Parameter.counts.Counts3[1] = (int)uiDataGridView2.Rows[8].Cells[1].Value;
-                Parameter.counts.Counts3[2] = (int)uiDataGridView2.Rows[9].Cells[1].Value;
-                Parameter.counts.Counts3[3] = (int)uiDataGridView2.Rows[10].Cells[1].Value;
-                Parameter.counts.Counts3[4] = (int)uiDataGridView2.Rows[11].Cells[1].Value;
-                Parameter.counts.Counts4[0] = (int)uiDataGridView2.Rows[7].Cells[2].Value;
-                Parameter.counts.Counts4[1] = (int)uiDataGridView2.Rows[8].Cells[2].Value;
-                Parameter.counts.Counts4[2] = (int)uiDataGridView2.Rows[9].Cells[2].Value;
-                Parameter.counts.Counts4[3] = (int)uiDataGridView2.Rows[10].Cells[2].Value;
-                Parameter.counts.Counts4[4] = (int)uiDataGridView2.Rows[11].Cells[2].Value;
-                XMLHelper.serialize<Parameter.Counts>(Parameter.counts, "Parameter/CountsParams.xml");
+                Parameters.counts.Counts3[0] = (int)uiDataGridView2.Rows[7].Cells[1].Value;
+                Parameters.counts.Counts3[1] = (int)uiDataGridView2.Rows[8].Cells[1].Value;
+                Parameters.counts.Counts3[2] = (int)uiDataGridView2.Rows[9].Cells[1].Value;
+                Parameters.counts.Counts3[3] = (int)uiDataGridView2.Rows[10].Cells[1].Value;
+                Parameters.counts.Counts3[4] = (int)uiDataGridView2.Rows[11].Cells[1].Value;
+                Parameters.counts.Counts4[0] = (int)uiDataGridView2.Rows[7].Cells[2].Value;
+                Parameters.counts.Counts4[1] = (int)uiDataGridView2.Rows[8].Cells[2].Value;
+                Parameters.counts.Counts4[2] = (int)uiDataGridView2.Rows[9].Cells[2].Value;
+                Parameters.counts.Counts4[3] = (int)uiDataGridView2.Rows[10].Cells[2].Value;
+                Parameters.counts.Counts4[4] = (int)uiDataGridView2.Rows[11].Cells[2].Value;
+                XMLHelper.serialize<Parameters.Counts>(Parameters.counts, Parameters.commministion.productName + "/CountsParams.xml");
                 myThread.Abort();               
                 LogHelper.Log.WriteInfo("软件关闭。");
                 this.Close();
@@ -950,7 +960,7 @@ namespace WY_App
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            if (Parameter.commministion.PlcEnable)
+            if (Parameters.commministion.PlcEnable)
             {
                 hslCommunication = new HslCommunication();
                 Thread.Sleep(1000);
@@ -971,7 +981,7 @@ namespace WY_App
                 lab_PLCStatus.BackColor = Color.Gray;
             }
 
-            if (Parameter.commministion.TcpClientEnable)
+            if (Parameters.commministion.TcpClientEnable)
             {
                 TcpClient tcpClientr = new TcpClient();
                 Thread.Sleep(1000);
@@ -992,7 +1002,7 @@ namespace WY_App
                 lab_Client.BackColor = Color.Gray;
             }
 
-            if (Parameter.commministion.TcpServerEnable)
+            if (Parameters.commministion.TcpServerEnable)
             {
                 TcpServer tcpServer = new TcpServer();
                 Thread.Sleep(1000);
@@ -1011,7 +1021,8 @@ namespace WY_App
             {
                 lab_Server.Text = "禁用";
                 lab_Server.BackColor = Color.Gray;
-            }           
+            }
+            lab_Product.Text = Parameters.commministion.productName;
             DataGridViewRow row0 = new DataGridViewRow();
             uiDataGridView1.Rows.Add(row0);
             DataGridViewRow row1 = new DataGridViewRow();
@@ -1039,17 +1050,17 @@ namespace WY_App
             uiDataGridView1.Rows[6].Cells[0].Value = "总NG";
             uiDataGridView1.Rows[7].Cells[0].Value = "总OK";
 
-            uiDataGridView1.Rows[3].Cells[1].Value = Parameter.counts.Counts1[0];//胶线NG
-            uiDataGridView1.Rows[4].Cells[1].Value = Parameter.counts.Counts1[1];//胶面NG
-            uiDataGridView1.Rows[5].Cells[1].Value = Parameter.counts.Counts1[2];//尺寸NG
-            uiDataGridView1.Rows[6].Cells[1].Value = Parameter.counts.Counts1[3];//总NG
-            uiDataGridView1.Rows[7].Cells[1].Value = Parameter.counts.Counts1[4];//总OK
+            uiDataGridView1.Rows[3].Cells[1].Value = Parameters.counts.Counts1[0];//胶线NG
+            uiDataGridView1.Rows[4].Cells[1].Value = Parameters.counts.Counts1[1];//胶面NG
+            uiDataGridView1.Rows[5].Cells[1].Value = Parameters.counts.Counts1[2];//尺寸NG
+            uiDataGridView1.Rows[6].Cells[1].Value = Parameters.counts.Counts1[3];//总NG
+            uiDataGridView1.Rows[7].Cells[1].Value = Parameters.counts.Counts1[4];//总OK
 
-            uiDataGridView1.Rows[3].Cells[2].Value = Parameter.counts.Counts2[0];
-            uiDataGridView1.Rows[4].Cells[2].Value = Parameter.counts.Counts2[1];
-            uiDataGridView1.Rows[5].Cells[2].Value = Parameter.counts.Counts2[2];
-            uiDataGridView1.Rows[6].Cells[2].Value = Parameter.counts.Counts2[3];
-            uiDataGridView1.Rows[7].Cells[2].Value = Parameter.counts.Counts2[4];
+            uiDataGridView1.Rows[3].Cells[2].Value = Parameters.counts.Counts2[0];
+            uiDataGridView1.Rows[4].Cells[2].Value = Parameters.counts.Counts2[1];
+            uiDataGridView1.Rows[5].Cells[2].Value = Parameters.counts.Counts2[2];
+            uiDataGridView1.Rows[6].Cells[2].Value = Parameters.counts.Counts2[3];
+            uiDataGridView1.Rows[7].Cells[2].Value = Parameters.counts.Counts2[4];
 
 
             DataGridViewRow row20 = new DataGridViewRow();
@@ -1092,17 +1103,17 @@ namespace WY_App
             uiDataGridView2.Rows[10].Cells[0].Value = "总NG";
             uiDataGridView2.Rows[11].Cells[0].Value = "总OK";
 
-			uiDataGridView2.Rows[7].Cells[1].Value = Parameter.counts.Counts3[0];//胶线NG
-			uiDataGridView2.Rows[8].Cells[1].Value = Parameter.counts.Counts3[1];//胶面NG
-			uiDataGridView2.Rows[9].Cells[1].Value = Parameter.counts.Counts3[2];//尺寸NG
-			uiDataGridView2.Rows[10].Cells[1].Value = Parameter.counts.Counts3[3];//总NG
-			uiDataGridView2.Rows[11].Cells[1].Value = Parameter.counts.Counts3[4];//总OK
+			uiDataGridView2.Rows[7].Cells[1].Value = Parameters.counts.Counts3[0];//胶线NG
+			uiDataGridView2.Rows[8].Cells[1].Value = Parameters.counts.Counts3[1];//胶面NG
+			uiDataGridView2.Rows[9].Cells[1].Value = Parameters.counts.Counts3[2];//尺寸NG
+			uiDataGridView2.Rows[10].Cells[1].Value = Parameters.counts.Counts3[3];//总NG
+			uiDataGridView2.Rows[11].Cells[1].Value = Parameters.counts.Counts3[4];//总OK
 
-			uiDataGridView2.Rows[7].Cells[2].Value = Parameter.counts.Counts4[0];
-			uiDataGridView2.Rows[8].Cells[2].Value = Parameter.counts.Counts4[1];
-			uiDataGridView2.Rows[9].Cells[2].Value = Parameter.counts.Counts4[2];
-			uiDataGridView2.Rows[10].Cells[2].Value = Parameter.counts.Counts4[3];
-			uiDataGridView2.Rows[11].Cells[2].Value = Parameter.counts.Counts4[4];
+			uiDataGridView2.Rows[7].Cells[2].Value = Parameters.counts.Counts4[0];
+			uiDataGridView2.Rows[8].Cells[2].Value = Parameters.counts.Counts4[1];
+			uiDataGridView2.Rows[9].Cells[2].Value = Parameters.counts.Counts4[2];
+			uiDataGridView2.Rows[10].Cells[2].Value = Parameters.counts.Counts4[3];
+			uiDataGridView2.Rows[11].Cells[2].Value = Parameters.counts.Counts4[4];
 
             HOperatorSet.SetPart(hWindows[0], 0, 0, -1, -1);//设置窗体的规格 
             HOperatorSet.SetPart(hWindows[1], 0, 0, -1, -1);//设置窗体的规格 
@@ -1177,7 +1188,7 @@ namespace WY_App
             //}
             if (HslCommunication.plc_connect_result)
             {
-                HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.StartAdd, 1);
+                HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.StartAdd, 1);
                 m_Pause = true;
                 btn_Start.Enabled = false;
                 btn_检测设置.Enabled = false;
@@ -1188,8 +1199,8 @@ namespace WY_App
                 btn_Stop.Enabled = true;
                 btn_CameraLiving.Enabled = false;
                 btn_Close_System.Enabled = false;
-                HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Trigger_Detection1, 0);
-                HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.Trigger_Detection2, 0);
+                HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Trigger_Detection1, 0);
+                HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.Trigger_Detection2, 0);
             }
             else
             {              
@@ -1220,7 +1231,7 @@ namespace WY_App
 
             if (HslCommunication.plc_connect_result )
             {
-                HslCommunication._NetworkTcpDevice.Write(Parameter.plcParams.StartAdd, 0);                            
+                HslCommunication._NetworkTcpDevice.Write(Parameters.plcParams.StartAdd, 0);                            
                 btn_Start.Enabled = true;
                 btn_SettingMean.Enabled = true;
                 btn_Stop.Enabled = false;
@@ -1256,19 +1267,17 @@ namespace WY_App
             登录界面 flg = new 登录界面();
             flg.ShowDialog();
         }
- 
+        public static string Product = "55";
+        void Product_TransfEvent(string value)
+        {
+            Product = value;
+        }
         private void btn_CameraLiving_Click(object sender, EventArgs e)
         {
-            if (!Halcon.Cam1Connect || !Halcon.Cam2Connect)
-            {
-                MessageBox.Show("相机链接异常，请检查!");
-                return;
-            }
-            else
-            {
-                Halcon.GrabImageLive(hWindows[0],Halcon.hv_AcqHandle0,out hImage[0]);
-                Halcon.GrabImageLive(hWindows[2],Halcon.hv_AcqHandle1,out hImage2[0]);
-            }           
+            切换产品 flg = new 切换产品();
+            flg.TransfEvent += Product_TransfEvent;
+            flg.ShowDialog();
+            lab_Product.Text = Product;
         }
 
         private void btn_检测设置_Click(object sender, EventArgs e)
@@ -1300,16 +1309,16 @@ namespace WY_App
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Parameter.counts.Counts1[0] = 0;
-            Parameter.counts.Counts1[1] = 0;
-            Parameter.counts.Counts1[2] = 0;
-            Parameter.counts.Counts1[3] = 0;
-            Parameter.counts.Counts1[4] = 0;
-            Parameter.counts.Counts2[0] = 0;
-            Parameter.counts.Counts2[1] = 0;
-            Parameter.counts.Counts2[2] = 0;
-            Parameter.counts.Counts2[3] = 0;
-            Parameter.counts.Counts2[4] = 0;
+            Parameters.counts.Counts1[0] = 0;
+            Parameters.counts.Counts1[1] = 0;
+            Parameters.counts.Counts1[2] = 0;
+            Parameters.counts.Counts1[3] = 0;
+            Parameters.counts.Counts1[4] = 0;
+            Parameters.counts.Counts2[0] = 0;
+            Parameters.counts.Counts2[1] = 0;
+            Parameters.counts.Counts2[2] = 0;
+            Parameters.counts.Counts2[3] = 0;
+            Parameters.counts.Counts2[4] = 0;
 
             uiDataGridView1.Rows[4].Cells[1].Value = 0;
             uiDataGridView1.Rows[5].Cells[1].Value = 0;
@@ -1321,16 +1330,16 @@ namespace WY_App
             uiDataGridView1.Rows[6].Cells[2].Value = 0;
             uiDataGridView1.Rows[7].Cells[2].Value = 0;
 
-            Parameter.counts.Counts3[0] = 0;
-            Parameter.counts.Counts3[1] = 0;
-            Parameter.counts.Counts3[2] = 0;
-            Parameter.counts.Counts3[3] = 0;
-            Parameter.counts.Counts3[4] = 0;
-            Parameter.counts.Counts4[0] = 0;
-            Parameter.counts.Counts4[1] = 0;
-            Parameter.counts.Counts4[2] = 0;
-            Parameter.counts.Counts4[3] = 0;
-            Parameter.counts.Counts4[4] = 0;
+            Parameters.counts.Counts3[0] = 0;
+            Parameters.counts.Counts3[1] = 0;
+            Parameters.counts.Counts3[2] = 0;
+            Parameters.counts.Counts3[3] = 0;
+            Parameters.counts.Counts3[4] = 0;
+            Parameters.counts.Counts4[0] = 0;
+            Parameters.counts.Counts4[1] = 0;
+            Parameters.counts.Counts4[2] = 0;
+            Parameters.counts.Counts4[3] = 0;
+            Parameters.counts.Counts4[4] = 0;
            
             uiDataGridView2.Rows[5].Cells[1].Value = 0;
             uiDataGridView2.Rows[6].Cells[1].Value = 0;
@@ -1342,7 +1351,7 @@ namespace WY_App
             uiDataGridView2.Rows[7].Cells[2].Value = 0;
             uiDataGridView2.Rows[8].Cells[2].Value = 0;
 
-            CleanFile(Parameter.commministion.ImageSavePath);
+            CleanFile(Parameters.commministion.ImageSavePath);
         }
 
         #region 任务队列

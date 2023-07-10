@@ -158,6 +158,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\切换产品.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\切换产品.designer.cs">
+      <DependentUpon>切换产品.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\注册机器.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -238,11 +244,14 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Utility\LogHelper.cs" />
-    <Compile Include="Utility\Parameter.cs" />
+    <Compile Include="Utility\Parameters.cs" />
     <Compile Include="Utility\ShortCutHelper.cs" />
     <Compile Include="Utility\TcpClient.cs" />
     <Compile Include="Utility\TcpServer.cs" />
     <Compile Include="Utility\XMLHelper.cs" />
+    <EmbeddedResource Include="Forms\切换产品.resx">
+      <DependentUpon>切换产品.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\注册机器.resx">
       <DependentUpon>注册机器.cs</DependentUpon>
     </EmbeddedResource>

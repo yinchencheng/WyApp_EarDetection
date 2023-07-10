@@ -14,10 +14,10 @@
       <LineLength>0</LineLength>
     </Rect1>
     <Rect1>
-      <Row1>1460.5970866298992</Row1>
-      <Colum1>807.7118525684117</Colum1>
-      <Row2>1695.9757173689372</Row2>
-      <Colum2>3030.3212148801131</Colum2>
+      <Row1>1369.5268945278133</Row1>
+      <Colum1>-242247.11772060816</Colum1>
+      <Row2>2382.0874458322664</Row2>
+      <Colum2>188675.52981670317</Colum2>
       <Length1>0</Length1>
       <Length2>0</Length2>
       <阈值>0</阈值>
@@ -26,10 +26,10 @@
       <LineLength>0</LineLength>
     </Rect1>
     <Rect1>
-      <Row1>1763.4664804469273</Row1>
-      <Colum1>818.44125078964</Colum1>
-      <Row2>2308.1592178770948</Row2>
-      <Colum2>2991.9346178142769</Colum2>
+      <Row1>1860.0527638190954</Row1>
+      <Colum1>720.11655085281109</Colum1>
+      <Row2>2551.0075376884424</Row2>
+      <Colum2>3429.2207833228049</Colum2>
       <Length1>0</Length1>
       <Length2>0</Length2>
       <阈值>0</阈值>
@@ -124,10 +124,10 @@
   </矩形检测区域>
   <模板区域>
     <Rect1>
-      <Row1>1438.0474860335196</Row1>
-      <Colum1>537.69835754895769</Colum1>
-      <Row2>1741.1201117318435</Row2>
-      <Colum2>546.75457991156031</Colum2>
+      <Row1>1294.7261306532664</Row1>
+      <Colum1>645.07927984838909</Colum1>
+      <Row2>2390.2035175879396</Row2>
+      <Colum2>650.25426405559062</Colum2>
       <Length1>0</Length1>
       <Length2>0</Length2>
       <阈值>3</阈值>
@@ -137,10 +137,10 @@
       <LineLength>100</LineLength>
     </Rect1>
     <Rect1>
-      <Row1>1417.0977653631285</Row1>
-      <Colum1>3219.6339229311434</Colum1>
-      <Row2>1713.1871508379888</Row2>
-      <Colum2>3229.9838913455465</Colum2>
+      <Row1>1304.7763819095478</Row1>
+      <Colum1>3522.370499052432</Colum1>
+      <Row2>2370.1030150753768</Row2>
+      <Colum2>3527.5454832596338</Colum2>
       <Length1>0</Length1>
       <Length2>0</Length2>
       <阈值>2</阈值>
@@ -150,10 +150,10 @@
       <LineLength>100</LineLength>
     </Rect1>
     <Rect1>
-      <Row1>1752.2932960893854</Row1>
-      <Colum1>751.16645609602017</Colum1>
-      <Row2>2305.3659217877093</Row2>
-      <Colum2>751.16645609602017</Colum2>
+      <Row1>1088.6959798994974</Row1>
+      <Colum1>1449.7893240682249</Colum1>
+      <Row2>1093.7211055276382</Row2>
+      <Colum2>2986.7596336070751</Colum2>
       <Length1>0</Length1>
       <Length2>0</Length2>
       <阈值>15</阈值>
@@ -163,10 +163,10 @@
       <LineLength>100</LineLength>
     </Rect1>
     <Rect1>
-      <Row1>1727.1536312849162</Row1>
-      <Colum1>3054.0344283006948</Colum1>
-      <Row2>2296.9860335195531</Row2>
-      <Colum2>3054.0344283006948</Colum2>
+      <Row1>2631.4095477386936</Row1>
+      <Colum1>1185.8651295009477</Colum1>
+      <Row2>2608.7964824120604</Row2>
+      <Colum2>2854.7975363234364</Colum2>
       <Length1>0</Length1>
       <Length2>0</Length2>
       <阈值>15</阈值>
@@ -215,10 +215,10 @@
       <LineLength>100</LineLength>
     </Rect1>
     <Rect1>
-      <Row1>2386.3715083798884</Row1>
-      <Colum1>1377.3395451674037</Colum1>
-      <Row2>2386.3715083798884</Row2>
-      <Colum2>2523.5985470625396</Colum2>
+      <Row1>2626.3844221105528</Row1>
+      <Colum1>1524.8265950726468</Colum1>
+      <Row2>2621.359296482412</Row2>
+      <Colum2>2373.5240050536954</Colum2>
       <Length1>0</Length1>
       <Length2>0</Length2>
       <阈值>20</阈值>
@@ -228,10 +228,10 @@
       <LineLength>100</LineLength>
     </Rect1>
     <Rect1>
-      <Row1>1162.9078212290503</Row1>
-      <Colum1>1203.9775742261529</Colum1>
-      <Row2>1165.7011173184358</Row2>
-      <Colum2>2865.1475047378394</Colum2>
+      <Row1>1508.2939698492462</Row1>
+      <Colum1>399.26753000631714</Colum1>
+      <Row2>1741.962311557789</Row2>
+      <Colum2>409.61749842072015</Colum2>
       <Length1>0</Length1>
       <Length2>0</Length2>
       <阈值>8</阈值>
@@ -241,10 +241,10 @@
       <LineLength>100</LineLength>
     </Rect1>
     <Rect1>
-      <Row1>2389.1648044692738</Row1>
-      <Colum1>1141.8777637397347</Colum1>
-      <Row2>2394.7513966480446</Row2>
-      <Colum2>2893.609917877448</Colum2>
+      <Row1>1515.8316582914572</Row1>
+      <Colum1>3791.4696778269108</Colum1>
+      <Row2>1772.1130653266332</Row2>
+      <Colum2>3794.0571699305115</Colum2>
       <Length1>0</Length1>
       <Length2>0</Length2>
       <阈值>8</阈值>
@@ -380,10 +380,10 @@
   </模板区域>
   <基准>
     <Rect1>
-      <Row1>1749.5</Row1>
-      <Colum1>756.3414403032217</Colum1>
-      <Row2>2266.259776536313</Row2>
-      <Colum2>751.16645609602017</Colum2>
+      <Row1>1880.1532663316582</Row1>
+      <Colum1>639.90429564118767</Colum1>
+      <Row2>2362.565326633166</Row2>
+      <Colum2>621.79185091598231</Colum2>
       <Length1>0</Length1>
       <Length2>0</Length2>
       <阈值>15</阈值>
@@ -481,8 +481,8 @@
       <adjust>0</adjust>
     </Spec>
   </检测规格>
-  <BaseRow>1148.9434814453125</BaseRow>
-  <BaseColumn>778.06451999541923</BaseColumn>
+  <BaseRow>1101.104248046875</BaseRow>
+  <BaseColumn>648.40357033098519</BaseColumn>
   <PixelResolution>0.02636195</PixelResolution>
   <SaveOrigalImage>false</SaveOrigalImage>
   <SaveDefeatImage>false</SaveDefeatImage>

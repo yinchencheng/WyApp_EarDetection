@@ -50,7 +50,6 @@
             this.btn_Minimizid_System = new Sunny.UI.UIButton();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btn_SettingMean = new Sunny.UI.UIButton();
             this.btn_SpecicationSetting = new Sunny.UI.UIButton();
             this.btn_CameraLiving = new Sunny.UI.UIButton();
@@ -87,10 +86,12 @@
             this.hWindowControl2 = new HalconDotNet.HWindowControl();
             this.hWindowControl3 = new HalconDotNet.HWindowControl();
             this.hWindowControl4 = new HalconDotNet.HWindowControl();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.toolStripStatusLabel7 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lab_Product = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel4.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -99,6 +100,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiDataGridView2)).BeginInit();
             this.tableLayoutPanel7.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // bunifuElipse1
@@ -276,17 +278,6 @@
             this.tableLayoutPanel6.Size = new System.Drawing.Size(1320, 57);
             this.tableLayoutPanel6.TabIndex = 0;
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(820, 0);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(500, 57);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
             // btn_SettingMean
             // 
             this.btn_SettingMean.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -347,7 +338,7 @@
             this.btn_CameraLiving.Size = new System.Drawing.Size(54, 50);
             this.btn_CameraLiving.Style = Sunny.UI.UIStyle.Custom;
             this.btn_CameraLiving.TabIndex = 13;
-            this.btn_CameraLiving.Text = "实时";
+            this.btn_CameraLiving.Text = "切换";
             this.btn_CameraLiving.TipsFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn_CameraLiving.Click += new System.EventHandler(this.btn_CameraLiving_Click);
             // 
@@ -439,6 +430,8 @@
             this.statusStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.statusStrip1.GripMargin = new System.Windows.Forms.Padding(0);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel7,
+            this.lab_Product,
             this.toolStripStatusLabel1,
             this.lab_PLCStatus,
             this.toolStripStatusLabel3,
@@ -839,6 +832,32 @@
             this.hWindowControl4.TabIndex = 3;
             this.hWindowControl4.WindowSize = new System.Drawing.Size(758, 553);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Location = new System.Drawing.Point(820, 0);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(500, 57);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // toolStripStatusLabel7
+            // 
+            this.toolStripStatusLabel7.BackColor = System.Drawing.Color.Silver;
+            this.toolStripStatusLabel7.Name = "toolStripStatusLabel7";
+            this.toolStripStatusLabel7.Size = new System.Drawing.Size(32, 16);
+            this.toolStripStatusLabel7.Text = "配置";
+            // 
+            // lab_Product
+            // 
+            this.lab_Product.BackColor = System.Drawing.Color.DimGray;
+            this.lab_Product.ForeColor = System.Drawing.Color.White;
+            this.lab_Product.Name = "lab_Product";
+            this.lab_Product.Size = new System.Drawing.Size(20, 16);
+            this.lab_Product.Text = "-1";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -854,7 +873,6 @@
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
@@ -865,6 +883,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.uiDataGridView2)).EndInit();
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -917,6 +936,8 @@
         private Sunny.UI.UIButton btn_检测设置2;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel6;
         private System.Windows.Forms.ToolStripStatusLabel lab_Camera1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel7;
+        private System.Windows.Forms.ToolStripStatusLabel lab_Product;
     }
 }
 

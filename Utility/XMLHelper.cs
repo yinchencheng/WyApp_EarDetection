@@ -2,7 +2,7 @@
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
-using static WY_App.Utility.Parameter;
+using static WY_App.Utility.Parameters;
 
 namespace WY_App.Utility
 {

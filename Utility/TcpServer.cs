@@ -29,16 +29,16 @@ namespace WY_App.Utility
                     Socket socketWatch = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                     //获取IP地址
                     //IPAddress ip = IPAddress.Any;
-                    IPAddress ip = IPAddress.Parse(Parameter.commministion.TcpServerIpAddress);
+                    IPAddress ip = IPAddress.Parse(Parameters.commministion.TcpServerIpAddress);
 
                     //创建端口号
-                    IPEndPoint point = new IPEndPoint(ip, Convert.ToInt32(Parameter.commministion.TcpServerIpPort));
+                    IPEndPoint point = new IPEndPoint(ip, Convert.ToInt32(Parameters.commministion.TcpServerIpPort));
                     //绑定IP地址和端口号
                     socketWatch.Bind(point);
                     socketWatch.SendTimeout = 1000;
                     socketWatch.ReceiveTimeout = 1000;
-                    LogHelper.Log.WriteInfo("TcpServerIP:" + Parameter.commministion.TcpServerIpAddress + "端口号:" + Parameter.commministion.TcpServerIpPort + "监听成功");
-                    MainForm.AlarmList.Add("TcpServerIP:" + Parameter.commministion.TcpServerIpAddress + "端口号:" + Parameter.commministion.TcpServerIpPort + "监听成功");
+                    LogHelper.Log.WriteInfo("TcpServerIP:" + Parameters.commministion.TcpServerIpAddress + "端口号:" + Parameters.commministion.TcpServerIpPort + "监听成功");
+                    MainForm.AlarmList.Add("TcpServerIP:" + Parameters.commministion.TcpServerIpAddress + "端口号:" + Parameters.commministion.TcpServerIpPort + "监听成功");
                     //开始监听：设置最大可以同时连接多少个请求
                     socketWatch.Listen(10);
 
@@ -52,7 +52,7 @@ namespace WY_App.Utility
                 catch (Exception ex)
                 {
                     //TcpServerConnectResult = false;
-                    LogHelper.Log.WriteError("TcpServerIP:" + Parameter.commministion.TcpServerIpAddress + "端口号:" + Parameter.commministion.TcpServerIpPort + "服务器创建失败！", ex.Message);
+                    LogHelper.Log.WriteError("TcpServerIP:" + Parameters.commministion.TcpServerIpAddress + "端口号:" + Parameters.commministion.TcpServerIpPort + "服务器创建失败！", ex.Message);
                 }
             }
                  
