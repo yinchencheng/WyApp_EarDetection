@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<Commministion xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <LogLevel>Debug</LogLevel>
+  <LogFileExistDay>7</LogFileExistDay>
+  <PlcEnable>true</PlcEnable>
+  <PlcType>ModbusTcpNet</PlcType>
+  <PlcIpAddress>192.168.3.10</PlcIpAddress>
+  <PlcIpPort>502</PlcIpPort>
+  <PlcDevice>0x01</PlcDevice>
+  <TcpClientEnable>false</TcpClientEnable>
+  <TcpClientIpAddress>127.0.0.1</TcpClientIpAddress>
+  <TcpClientIpPort>9600</TcpClientIpPort>
+  <TcpServerEnable>false</TcpServerEnable>
+  <TcpServerIpAddress>192.168.3.20</TcpServerIpAddress>
+  <TcpServerIpPort>580</TcpServerIpPort>
+  <ImagePath>D:\VisionDetect\InspectImage\</ImagePath>
+  <ImageSavePath>D:\Image\</ImageSavePath>
+  <productName>初始化</productName>
+  <DeviceID>876EE759EE0D0BCF4AED2ED907E88DD8D4A871148181A7D0FC8708664104A193</DeviceID>
+</Commministion>

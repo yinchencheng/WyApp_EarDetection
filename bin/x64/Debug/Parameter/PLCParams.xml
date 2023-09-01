@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<PLCParams xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Trigger_Detection0>D800</Trigger_Detection0>
+  <Trigger_Detection1>750</Trigger_Detection1>
+  <Completion1>790</Completion1>
+  <Trigger_Detection2>250</Trigger_Detection2>
+  <Completion0>770</Completion0>
+  <Completion2>200</Completion2>
+  <StartAdd>760</StartAdd>
+  <HeartBeatAdd>D771</HeartBeatAdd>
+</PLCParams>

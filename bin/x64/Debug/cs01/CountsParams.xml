@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<Counts xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Counts1>
+    <int>35</int>
+    <int>2</int>
+    <int>0</int>
+    <int>37</int>
+    <int>37</int>
+  </Counts1>
+  <Counts2>
+    <int>38</int>
+    <int>3</int>
+    <int>1</int>
+    <int>42</int>
+    <int>42</int>
+  </Counts2>
+  <Counts3>
+    <int>25</int>
+    <int>69</int>
+    <int>45</int>
+    <int>139</int>
+    <int>162</int>
+  </Counts3>
+  <Counts4>
+    <int>26</int>
+    <int>150</int>
+    <int>27</int>
+    <int>203</int>
+    <int>93</int>
+  </Counts4>
+</Counts>

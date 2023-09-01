@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Products>
+  <Product>
+    <Name>初始化</Name>
+  </Product>
+  <Product>
+    <Name>配置1</Name>
+  </Product>
+  <Product>
+    <Name>cs01</Name>
+  </Product>
+</Products>
